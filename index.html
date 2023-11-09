@@ -55,7 +55,72 @@
             // Remove some wite spaces
             pgn = pgn.replaceAll(/\s*:\s*/g, ':');
 
+            // Fix pawn moves
+            let tokens = tokenizePGN(pgn);
+            tokens = setPawnRowNumber(tokens);
+            pgn = tokensToString(tokens);
+
             document.getElementById('enpgn').value = pgn;
+        }
+
+        function tokenizePGN(strPGN) {
+            if (strPGN[strPGN.length - 1] != ' ') {
+                strPGN += ' ';
+            }
+            const tokens = [...strPGN.matchAll(/(?<number>\d+). (?<white>\S+) (?<black>\S+) /g)].map(m => m.groups);
+            return tokens;
+        }
+
+        function setPawnRowNumber(tokens) {
+            let j = 0;
+            let rowNumber = 0;
+            let columnLetter1 = null;
+            let columnLetter2 = null;
+            let matchNumber = null;
+            let matchLetter = null;
+            let pawnRegex = null;
+            ['white', 'black'].forEach((color => {
+                tokens.forEach((token, index) => {
+                    if (matchLetter = token[color].match(/^(?<letter1>[a-h])(?<letter2>[a-h])$/)) {
+                        columnLetter1 = matchLetter.groups.letter1;
+                        columnLetter2 = matchLetter.groups.letter2;
+                        pawnRegex = new RegExp(`^${columnLetter1}(?<number>[1-8])$`);
+                        j = index - 1;
+                        while (j) {
+                            if (matchNumber = tokens[j][color].match(pawnRegex)) {
+                                rowNumber = parseInt(matchNumber.groups.number);
+                                if (color == 'white') {
+                                    rowNumber++;
+                                } else {
+                                    rowNumber--;
+                                }
+                                tokens[index][color] = `${columnLetter1}:${columnLetter2}${rowNumber}`;
+                                break;
+                            }
+                            if (j <= 0) {
+                                tokens[index][color] = `${columnLetter1}:${columnLetter2}3`;
+                                break;
+                            }
+                            j--;
+                        }
+                        columnLetter1 = null;
+                        columnLetter2 = null;
+                        rowNumber = 0;
+                        matchNumber = null;
+                        matchLetter = null;
+                        j = 0;
+                    }
+                });
+            }));
+            return tokens;
+        }
+
+        function tokensToString(tokens) {
+            let strPGN = '';
+            tokens.forEach(token => {
+                strPGN += `${token.number}. ${token.white} ${token.black} `;
+            });
+            return strPGN;
         }
     </script>
 </body>
