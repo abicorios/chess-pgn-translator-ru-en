@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Chess PGN Translator ru en</title>
+</head>
+
+<body>
+    <textarea id="rupgn" rows="10" cols="50" placeholder="Enter PGN with the russian letters"></textarea>
+    <textarea id="enpgn" rows="10" cols="50" placeholder="Result is PGN with the english letters"></textarea>
+    <p><button onclick="translatePGN()">Translate</button></p>
+    <script>
+        const russianK = 'К';
+        const englishK = 'K';
+        const russianC = 'С';
+        const englishC = 'C';
+
+        const russianASmall = 'а';
+        const englishASmall = 'a';
+        const russianCSmall = 'с';
+        const englishCSmall = 'c';
+        const russianESmall = 'е';
+        const englishESmall = 'e';
+
+        const russianBSmall = 'б';
+        const numberSix = '6';
+        const russianZ = 'З';
+        const russianZSmall = 'з';
+        const numberThree = '3';
+
+        function translatePGN() {
+            let pgn = document.getElementById('rupgn').value;
+
+            // Translate english letters, similar to russian letters, to russian letters
+            pgn = pgn.replaceAll(englishK, russianK);
+            pgn = pgn.replaceAll(englishC, russianC);
+
+            // Translate russian small letters, similar to english small letters, to english small letters
+            pgn = pgn.replaceAll(russianASmall, englishASmall);
+            pgn = pgn.replaceAll(russianCSmall, englishCSmall);
+            pgn = pgn.replaceAll(russianESmall, englishESmall);
+
+            // Translate russian letters, similar to numbers, to numbers
+            pgn = pgn.replaceAll(russianBSmall, numberSix);
+            pgn = pgn.replaceAll(russianZ, numberThree);
+            pgn = pgn.replaceAll(russianZSmall, numberThree);
+
+            // Translate russian letters to english letters
+            pgn = pgn.replaceAll('Кр', englishK);
+            pgn = pgn.replaceAll('Ф', 'Q');
+            pgn = pgn.replaceAll('Л', 'R');
+            pgn = pgn.replaceAll(russianC, 'B');
+            pgn = pgn.replaceAll(russianK, 'N');
+
+            document.getElementById('enpgn').value = pgn;
+        }
+    </script>
+</body>
+
+</html>
