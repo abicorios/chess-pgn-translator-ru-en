@@ -40,10 +40,11 @@
             pgn = pgn.replaceAll(russianCSmall, englishCSmall);
             pgn = pgn.replaceAll(russianESmall, englishESmall);
 
-            // Translate russian letters, similar to numbers, to numbers
+            // Translate letters, similar to numbers, to numbers
             pgn = pgn.replaceAll(russianBSmall, numberSix);
             pgn = pgn.replaceAll(russianZ, numberThree);
             pgn = pgn.replaceAll(russianZSmall, numberThree);
+            pgn = pgn.replaceAll('l', '1');
 
             // Translate russian letters to english letters
             pgn = pgn.replaceAll('Кр', englishK);
