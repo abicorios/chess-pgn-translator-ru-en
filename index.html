@@ -52,6 +52,9 @@
             pgn = pgn.replaceAll(russianC, 'B');
             pgn = pgn.replaceAll(russianK, 'N');
 
+            // Remove some wite spaces
+            pgn = pgn.replaceAll(/\s*:\s*/g, ':');
+
             document.getElementById('enpgn').value = pgn;
         }
     </script>
