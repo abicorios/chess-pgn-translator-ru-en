@@ -83,15 +83,17 @@
             let matchNumber = null;
             let matchLetter = null;
             let pawnRegex = null;
+            let pawnRegex2 = null;
             ['white', 'black'].forEach((color => {
                 tokens.forEach((token, index) => {
                     if (matchLetter = token[color].match(/^(?<letter1>[a-h])(?<letter2>[a-h])$/)) {
                         columnLetter1 = matchLetter.groups.letter1;
                         columnLetter2 = matchLetter.groups.letter2;
                         pawnRegex = new RegExp(`^${columnLetter1}(?<number>[1-8])$`);
+                        pawnRegex2 = new RegExp(`^[a-h]:${columnLetter1}(?<number>[1-8])$`);
                         j = index - 1;
                         while (j) {
-                            if (matchNumber = tokens[j][color].match(pawnRegex)) {
+                            if ((matchNumber = tokens[j][color].match(pawnRegex)) || (matchNumber = tokens[j][color].match(pawnRegex2))) {
                                 rowNumber = parseInt(matchNumber.groups.number);
                                 if (color == 'white') {
                                     rowNumber++;
@@ -101,7 +103,7 @@
                                 tokens[index][color] = `${columnLetter1}:${columnLetter2}${rowNumber}`;
                                 break;
                             }
-                            if (j <= 0) {
+                            if (j <= 1) {
                                 tokens[index][color] = `${columnLetter1}:${columnLetter2}3`;
                                 break;
                             }
@@ -112,6 +114,8 @@
                         rowNumber = 0;
                         matchNumber = null;
                         matchLetter = null;
+                        pawnRegex = null;
+                        pawnRegex2 = null;
                         j = 0;
                     }
                 });
