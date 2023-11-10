@@ -27,6 +27,8 @@
         const russianZ = 'З';
         const russianZSmall = 'з';
         const numberThree = '3';
+        const russianP = 'р';
+        const englishP = 'p';
 
         function translatePGN() {
             let pgn = document.getElementById('rupgn').value;
@@ -34,6 +36,7 @@
             // Translate english letters, similar to russian letters, to russian letters
             pgn = pgn.replaceAll(englishK, russianK);
             pgn = pgn.replaceAll(englishC, russianC);
+            pgn = pgn.replaceAll(englishP, russianP);
 
             // Translate russian small letters, similar to english small letters, to english small letters
             pgn = pgn.replaceAll(russianASmall, englishASmall);
