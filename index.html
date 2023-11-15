@@ -29,6 +29,7 @@
         const numberThree = '3';
         const russianP = 'р';
         const englishP = 'p';
+        const russianSoft = 'Ь';
 
         function translatePGN() {
             let pgn = document.getElementById('rupgn').value;
@@ -42,6 +43,9 @@
             pgn = pgn.replaceAll(russianASmall, englishASmall);
             pgn = pgn.replaceAll(russianCSmall, englishCSmall);
             pgn = pgn.replaceAll(russianESmall, englishESmall);
+
+            // Translate russian letters, similar to english letters, to english letters
+            pgn = pgn.replaceAll(russianSoft, 'b');
 
             // Translate letters, similar to numbers, to numbers
             pgn = pgn.replaceAll(russianBSmall, numberSix);
