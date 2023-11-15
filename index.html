@@ -60,6 +60,14 @@
             pgn = pgn.replaceAll(russianC, 'B');
             pgn = pgn.replaceAll(russianK, 'N');
 
+
+            // Replace long dash
+            pgn = pgn.replaceAll('—', '-');
+
+            // Replace zeros
+            pgn = pgn.replaceAll('0-', 'O-');
+            pgn = pgn.replaceAll('-0', '-O');
+
             // Remove some wite spaces
             pgn = pgn.replaceAll(/\s*:\s*/g, ':');
 
@@ -67,6 +75,9 @@
             let tokens = tokenizePGN(pgn);
             tokens = setPawnRowNumber(tokens);
             pgn = tokensToString(tokens);
+
+            // Replace the eatings
+            pgn = pgn.replaceAll(':', 'x');
 
             document.getElementById('enpgn').value = pgn;
         }
